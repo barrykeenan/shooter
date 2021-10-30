@@ -1,10 +1,18 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ReactiveTarget : MonoBehaviour
 {
-public void ReactToHit()
+    public void ReactToHit()
     {
+        // On ReactToHit, set dead state on WanderingAI component
+        WanderingAI behavior = GetComponent<WanderingAI>();
+        if (behavior != null)
+        {
+            behavior.SetAlive(false);
+        }
+
         StartCoroutine(Die());
     }
 
