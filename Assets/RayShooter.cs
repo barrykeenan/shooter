@@ -38,19 +38,19 @@ public class RayShooter : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                // Debug.Log("Hit " + hit.point);
-                StartCoroutine(SphereIndicator(hit.point));
+                // Retrieve the object the ray hit
+                GameObject hitObject = hit.transform.gameObject;
 
-                // GameObject hitObject = hit.transform.gameObject;
-                // ReactiveTarget target = hitObject.GetComponent<ReactiveTarget>();
-                // if (target != null)
-                // {
-                //     target.ReactToHit();
-                // }
-                // else
-                // {
-                //     StartCoroutine(SphereIndicator(hit.point));
-                // }
+                // If object has a ReactiveTarget component attached, then react
+                ReactiveTarget target = hitObject.GetComponent<ReactiveTarget>();
+                if (target != null)
+                {
+                    target.ReactToHit();
+                }
+                else
+                {
+                    StartCoroutine(SphereIndicator(hit.point));
+                }
             }
         }
     }
@@ -59,6 +59,7 @@ public class RayShooter : MonoBehaviour
     {
         GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         sphere.transform.position = pos;
+        sphere.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
 
         yield return new WaitForSeconds(1);
 
